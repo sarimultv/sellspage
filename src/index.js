@@ -1,13 +1,48 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import "./index.css";
+import App from "./routes/App";
+import reportWebVitals from "./reportWebVitals";
+import "bootstrap/dist/css/bootstrap.min.css";
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import ErrorPage from "./components/ErrorPage";
+import Home from "./routes/Home";
+import CardList from "./components/CardList";
+import About from "./components/About";
+import BagList from "./components/BagList";
+import itemStore from "./store/myntra-store";
+import { Provider } from "react-redux";
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById("root"));
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <App />,
+    errorElement: <ErrorPage />,
+    children: [
+      { path: "/", element: <Home /> },
+      {
+        path: "/card",
+        element: <CardList />,
+      },
+      {
+        path: "/about",
+        element: <About />,
+      },
+      {
+        path: "/bag",
+        element: <BagList />,
+      },
+    ],
+  },
+]);
+
 root.render(
   <React.StrictMode>
-    <App />
+    <Provider store={itemStore}>
+      <RouterProvider router={router} />
+    </Provider>
   </React.StrictMode>
 );
 
