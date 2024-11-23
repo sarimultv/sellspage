@@ -6,7 +6,7 @@ const Card = ({ item }) => {
           className="bd-placeholder-img card-img-top object-fit-cover"
           width="100%"
           height="225"
-          src={item.image}
+          src={"/" + item.image}
           alt="item"
         />
 

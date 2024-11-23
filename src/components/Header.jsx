@@ -1,22 +1,53 @@
 import { GiShoppingBag } from "react-icons/gi";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useRef } from "react";
+import {
+  addSearchItems,
+  hideSearchDiv,
+  showSearchDiv,
+} from "../store/searchSlice";
+import SearchUI from "./SearchUI";
 
 const Header = () => {
+  const dispatch = useDispatch();
   const bag = useSelector((store) => store.bag);
   const items = useSelector((store) => store.items);
-  console.log(items);
 
-  let inputElement = useRef();
-  const handleSearchBtn = () => {
-    setTimeout(() => {
-      let newFilterItem = items.filter(
-        (item) => item.id === inputElement.current.value
-      );
-      console.log(newFilterItem);
-    }, 4000);
+  const inputElement = useRef();
+
+  const handleFocus = () => {
+    dispatch(showSearchDiv());
   };
+
+  const handleBlur = () => {
+    setTimeout(() => {
+      dispatch(hideSearchDiv());
+    }, 200);
+  };
+
+  let timer;
+  const handleSearchBtn = (evt) => {
+    evt.preventDefault();
+
+    clearTimeout(timer);
+
+    timer = setTimeout(() => {
+      const newFilterItem = items.filter((item) => {
+        return (
+          item.company
+            .toLowerCase()
+            .includes(inputElement.current.value.toLowerCase()) ||
+          item.item_name
+            .toLowerCase()
+            .includes(inputElement.current.value.toLowerCase())
+        );
+      });
+      dispatch(addSearchItems(newFilterItem));
+    }, 3000);
+  };
+
+  const showDiv = useSelector((store) => store.searchItem.showDiv);
 
   return (
     <header className="p-3 text-bg-light">
@@ -27,7 +58,7 @@ const Header = () => {
               className="bi me-2"
               width="40"
               height="32"
-              src="images/myntra_logo.webp"
+              src="/images/myntra_logo.webp"
               alt="logo"
             />
           </Link>
@@ -43,64 +74,52 @@ const Header = () => {
                 Card
               </Link>
             </li>
-            {/* <li>
-              <Link to="/price" className="nav-link px-2 text-dark">
-                Pricing
-              </Link>
-            </li> */}
+
             <li>
               <Link to="/about" className="nav-link px-2 text-dark">
                 About
               </Link>
             </li>
-          </ul>
-
-          <form
-            className="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3"
-            role="search"
-          >
-            <input
-              type="search"
-              className="form-control form-control-light text-bg-light"
-              placeholder="Search..."
-              aria-label="Search"
-              ref={inputElement}
-              onChange={handleSearchBtn}
-            />
-          </form>
-
-          <div className="text-end d-flex">
-            {/* <span>
-              <Link
-                to="/profile"
-                className="nav-link text-dark d-flex align-items-center me-2"
-              >
-                <IoPersonSharp />
-                Profile
-              </Link>
-            </span>
-            <span>
-              <Link
-                to="/wishlist"
-                className="nav-link text-dark d-flex align-items-center me-2 "
-              >
-                <IoMdHeartEmpty />
-                Wishlist
-              </Link>
-            </span> */}
-            <span>
-              <Link
-                to="/bag"
-                className="nav-link text-dark d-flex align-items-center"
-              >
+            <Link
+              to="/bag"
+              className="nav-link text-dark d-flex align-items-center"
+            >
+              <li>
                 <GiShoppingBag></GiShoppingBag>
                 Bag
                 <span className="mb-2 translate-middle badge rounded-pill bg-success">
                   {bag.length}
                 </span>
-              </Link>
-            </span>
-          </div>
+              </li>
+            </Link>
+          </ul>
+
+          <form
+            className="form-floating col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3 w-50 "
+            // role="search"
+            onSubmit={handleSearchBtn}
+          >
+            <input
+              type="text"
+              className="form-control  w-100"
+              placeholder="Search Items"
+              aria-label="Search"
+              ref={inputElement}
+              id={"searchItem"}
+              onChange={handleSearchBtn}
+              onFocus={handleFocus}
+              onBlur={handleBlur}
+            />
+            <label htmlFor="searchItem" className="">
+              Search Items
+            </label>
+
+            {showDiv && (
+              <div className="mx-4">
+                <SearchUI />
+              </div>
+            )}
+          </form>
         </div>
       </div>
     </header>

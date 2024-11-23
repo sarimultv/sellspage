@@ -1,6 +1,7 @@
 import { useSelector } from "react-redux";
 import Bag from "./Bag";
 import BagItem from "./BagItem";
+import { Link } from "react-router-dom";
 
 const BagList = () => {
   const items = useSelector((store) => store.items);
@@ -19,7 +20,22 @@ const BagList = () => {
         })}
       </div>
       <div className="col-md-6 col-lg-4 col-sm-6">
-        <Bag />;
+        {finalItem.length === 0 ? (
+          <div className="py-4 d-flex align-items-center justify-content-center">
+            <div>
+              <p>Your cart is empty!</p>
+              <Link to={"/"}>
+                <input
+                  type="button"
+                  className="btn btn-primary py-1 px-8 fw-bold"
+                  value={"Shop now"}
+                />
+              </Link>
+            </div>
+          </div>
+        ) : (
+          <Bag />
+        )}
       </div>
     </div>
   );

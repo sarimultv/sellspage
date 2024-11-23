@@ -12,6 +12,8 @@ import About from "./components/About";
 import BagList from "./components/BagList";
 import itemStore from "./store/myntra-store";
 import { Provider } from "react-redux";
+import SearchUI from "./components/SearchUI";
+import ViewItem from "./components/ViewItem";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
@@ -33,6 +35,14 @@ const router = createBrowserRouter([
       {
         path: "/bag",
         element: <BagList />,
+      },
+      {
+        path: "/search",
+        element: <SearchUI />,
+      },
+      {
+        path: "/itemView/:id",
+        element: <ViewItem />,
       },
     ],
   },
