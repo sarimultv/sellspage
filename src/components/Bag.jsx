@@ -45,13 +45,9 @@ const Bag = () => {
         </div>
       </div>
       <p className="text-center">
-        <a
-          href="#"
-          className="btn btn-secondary"
-          onClick={(e) => e.preventDefault()}
-        >
+        <p className="btn btn-secondary" onClick={(e) => e.preventDefault()}>
           Place Order
-        </a>
+        </p>
       </p>
     </div>
   );

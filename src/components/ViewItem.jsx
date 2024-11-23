@@ -8,8 +8,10 @@ const ViewItem = () => {
   const itemArr = ITEMS.filter((item) => item.id === id);
 
   return (
-    itemArr &&
-    itemArr.map((viewItem) => <Card key={viewItem.id} item={viewItem} />)
+    <div className="p-2 w-25">
+      {itemArr.length !== 0 &&
+        itemArr.map((viewItem) => <Card key={viewItem.id} item={viewItem} />)}
+    </div>
   );
 };
 

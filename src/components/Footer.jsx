@@ -23,7 +23,7 @@ const Footer = () => {
           </li>
         </ul>
         <p className="text-center text-body-secondary">
-          © 2024 sellsPage.com limited
+          © 2024 sellspage.web.app limited
         </p>
       </footer>
     </div>

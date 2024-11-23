@@ -3,6 +3,7 @@ import { MdLibraryAdd } from "react-icons/md";
 import { GoStarFill } from "react-icons/go";
 import { useDispatch, useSelector } from "react-redux";
 import { bagSliceActions } from "../store/bagSlice";
+import { Link } from "react-router-dom";
 
 const Price = ({ item }) => {
   const dispatch = useDispatch();
@@ -36,21 +37,27 @@ const Price = ({ item }) => {
             </button>
             {item.rating.count}
           </div>
-          <div className="card-title company-name mt-2 fw-bold">
-            {item.company}
-          </div>
-          <div className="card-text item-name">{item.item_name}</div>
-          <div className="card-text price">
-            <span className="card-text current-price me-3">
-              ₹{item.current_price}
-            </span>
-            <span className="card-text original-price me-3 text-decoration-line-through">
-              ₹{item.original_price}
-            </span>
-            <span className="card-text discount">
-              ({item.discount_percentage}% off)
-            </span>
-          </div>
+          <Link
+            to={`/itemView/${item.id}`}
+            style={{ textDecoration: "none", color: "inherit" }}
+          >
+            <div className="card-title company-name mt-2 fw-bold">
+              {item.company}
+            </div>
+
+            <div className="card-text item-name">{item.item_name}</div>
+            <div className="card-text price">
+              <span className="card-text current-price me-3">
+                ₹{item.current_price}
+              </span>
+              <span className="card-text original-price me-3 text-decoration-line-through">
+                ₹{item.original_price}
+              </span>
+              <span className="card-text discount">
+                ({item.discount_percentage}% off)
+              </span>
+            </div>
+          </Link>
         </div>
         {foundElement && (
           <button

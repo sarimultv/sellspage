@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 const Card = ({ item }) => {
   return (
     <div className="col">
@@ -11,16 +13,21 @@ const Card = ({ item }) => {
         />
 
         <div className="card-body">
-          <div className="card-title fw-bold">{item.company}</div>
-          <div className="card-text">{item.item_name}</div>
-          <div className="d-flex flex-wrap align-items-center justify-content-start">
-            <span className="card-text me-3">₹{item.current_price}</span>
-            <span className="card-text text-decoration-line-through me-3">
-              ₹{item.original_price}
-            </span>
-            <span className="card-text">{item.discount_percentage}% off</span>
-          </div>
+          <Link
+            to={`/itemView/${item.id}`}
+            style={{ textDecoration: "none", color: "inherit" }}
+          >
+            <div className="card-title fw-bold">{item.company}</div>
 
+            <div className="card-text">{item.item_name}</div>
+            <div className="d-flex flex-wrap align-items-center justify-content-start">
+              <span className="card-text me-3">₹{item.current_price}</span>
+              <span className="card-text text-decoration-line-through me-3">
+                ₹{item.original_price}
+              </span>
+              <span className="card-text">{item.discount_percentage}% off</span>
+            </div>
+          </Link>
           <div className="d-flex justify-content-between align-items-center mt-3">
             <div className="btn-group">
               <button

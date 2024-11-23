@@ -7,7 +7,6 @@ import {
   hideSearchDiv,
   showSearchDiv,
 } from "../store/searchSlice";
-import SearchUI from "./SearchUI";
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -46,8 +45,6 @@ const Header = () => {
       dispatch(addSearchItems(newFilterItem));
     }, 3000);
   };
-
-  const showDiv = useSelector((store) => store.searchItem.showDiv);
 
   return (
     <header className="p-3 text-bg-light">
@@ -113,12 +110,6 @@ const Header = () => {
             <label htmlFor="searchItem" className="">
               Search Items
             </label>
-
-            {showDiv && (
-              <div className="mx-4">
-                <SearchUI />
-              </div>
-            )}
           </form>
         </div>
       </div>
